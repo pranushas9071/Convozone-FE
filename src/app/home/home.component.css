@@ -1,0 +1,12 @@
+form {
+  margin-top: 35%;
+  margin-left: 20%;
+  height: 100px;
+}
+button {
+  font-variant-caps: small-caps;
+}
+span {
+  display: inline-block;
+  margin-right: 20px;
+}

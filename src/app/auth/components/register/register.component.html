@@ -1,0 +1,48 @@
+<div>
+  <form
+    style="margin-top: 30px; margin-left: 50px"
+    [formGroup]="userDetails"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="inputs">
+      <span class="p-float-label">
+        <input
+          type="text"
+          id="inputtext"
+          formControlName="username"
+          pInputText
+        />
+        <label for="inputtext">Username</label>
+      </span>
+    </div>
+    <div class="inputs">
+      <span class="p-float-label">
+        <input type="text" id="inputtext" formControlName="email" pInputText />
+        <label for="inputtext">Email</label>
+      </span>
+    </div>
+    <div class="inputs">
+      <span class="p-float-label">
+        <input
+          type="password"
+          id="inputtext"
+          formControlName="password"
+          pInputText
+        />
+        <label for="inputtext">Password</label>
+      </span>
+    </div>
+    <div class="inputs">
+      <span class="p-float-label">
+        <input
+          type="password"
+          id="inputtext"
+          formControlName="confirmPassword"
+          pInputText
+        />
+        <label for="inputtext">Confirm Password</label>
+      </span>
+    </div>
+    <button pButton type="submit">Submit</button>
+  </form>
+</div>

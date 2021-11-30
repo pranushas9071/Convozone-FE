@@ -1,0 +1,54 @@
+<div
+  style="
+    height: 520px;
+    margin-bottom: 40px;
+    overflow: overlay;
+    background-attachment: fixed;
+    background-image: url('https://sharegate.com/app/uploads/2020/04/jasper-recommendedupdates-v20-04-09-featured2x-920x517.png');
+    background-size: cover;
+  "
+>
+  <div>
+    <ul id="messageList"></ul>
+    <!-- <p>{{typingOb | async}}</p> -->
+    <!-- <p>{{typing}}</p> -->
+    <div *ngIf="typing" class="typing">
+      <p style="color: white; display: inline; padding-bottom: 10px;font-size: 16px;">
+        typing
+      </p>
+      <div
+        class="dot"
+        [@PulseAtEnds]="state ? 'open' : 'close'"
+        (@PulseAtEnds.done)="onEnd()"
+      ></div>
+      <div
+        class="dot"
+        [@PulseAtCenter]="state ? 'open' : 'close'"
+        (@PulseAtCenter.done)="onEnd()"
+      ></div>
+      <div
+        class="dot"
+        [@PulseAtEnds]="state ? 'open' : 'close'"
+        (@PulseAtEnds.done)="onEnd()"
+      ></div>
+    </div>
+  </div>
+  <div>
+    <form [formGroup]="chats" (ngSubmit)="sendMessage()">
+      <input
+        type="text"
+        id="messageInput"
+        formControlName="message"
+        placeholder="Type a message"
+        autocomplete="off"
+      />
+      <button
+        pButton
+        type="submit"
+        icon="pi pi-check"
+        iconPos="right"
+        label="send"
+      ></button>
+    </form>
+  </div>
+</div>
