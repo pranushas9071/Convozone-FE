@@ -1,0 +1,11 @@
+.headings {
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
+}
+:host ::ng-deep .p-toolbar {
+  background-color: #363636;
+}
+:host ::ng-deep .pi-cog {
+  color: white;
+}

@@ -24,7 +24,7 @@ import { AuthComponent } from './auth.component';
     ReactiveFormsModule,
     HttpClientModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
   ]
 })
 export class AuthModule { }

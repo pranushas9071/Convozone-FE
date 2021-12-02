@@ -1,0 +1,74 @@
+form {
+  margin-top: 9%;
+  margin-left: 23%;
+}
+.inputs {
+  margin-bottom: 7px;
+  margin-top: 7px;
+}
+.invalid {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+}
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+input {
+  height: 40px;
+  font-family: "primeicons";
+}
+button {
+  width: 68%;
+  padding-left: 26%;
+  margin-top: 5px;
+}
+button:focus{
+  box-shadow: none;
+}
+a {
+  cursor: pointer;
+  color: #0d89ec;
+  font-family: "primeicons";
+  text-decoration: none;
+}
+p {
+  font-size: 14px;
+  padding-left: 1%;
+  color: darkgray;
+  font-family: "primeicons";
+}
+h6 {
+  font-size: initial;
+  font-family: cursive;
+  padding-left: 9px;
+}
+.container {
+  background-image: url("https://media.istockphoto.com/photos/businessman-working-with-smart-phone-and-digital-tablet-and-laptop-picture-id1004463298?k=20&m=1004463298&s=612x612&w=0&h=SufXJQ4Kj0r0QDOglBlSvIu1F0SsxzKQCIyQ5OMEQ1o=");
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: rgb(15 13 13 / 73%);
+  background-blend-mode: multiply;
+}
+.inner-container {
+  height: 87%;
+  margin-top: 4.5%;
+  background-color: white;
+  margin-left: 34%;
+  margin-right: 34.8%;
+}
+.logo {
+  box-shadow: 1px 1px 2px 2px aliceblue;
+  position: absolute;
+  width: 95px;
+  height: 95px;
+  margin-top: -48px;
+  margin-left: 151px;
+  background-color: #0d89ec;
+  color: white;
+  border-radius: 50%;
+}

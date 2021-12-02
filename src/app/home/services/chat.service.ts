@@ -11,8 +11,8 @@ export class ChatService {
     return this.http.post(`http://localhost:3000/user/saveMessage`, data);
   }
 
-  getAllMessages(from:string,to:string) {
-    return this.http.get(`http://localhost:3000/user/allMessages?from=${from}&to=${to}`);
+  getAllMessages(to:string) {
+    return this.http.get(`http://localhost:3000/user/allMessages?to=${to}`);
   }
 
   getAllContacts() {

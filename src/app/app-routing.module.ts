@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChatBoxComponent } from './chat-box/chat-box.component';
-import { ContactsComponent } from './contacts/contacts.component';
-import { HomeComponent } from './home/home.component';
+import { ChatBoxComponent } from './home/chat/chat-box/chat-box.component';
+import { ContactsComponent } from './home/user/contacts/contacts.component';
 
 const routes: Routes = [
   {
@@ -11,20 +10,12 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent,
-  },
-  {
-    path: 'chat',
-    component: ChatBoxComponent,
-  },
-  {
-    path: 'contacts',
-    component: ContactsComponent,
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'auth',
   },
 ];
 

@@ -1,21 +1,35 @@
 <div
   style="
-    height: 520px;
+    height: 530px;
     margin-bottom: 40px;
     overflow: overlay;
     background-attachment: fixed;
-    background-image: url('https://sharegate.com/app/uploads/2020/04/jasper-recommendedupdates-v20-04-09-featured2x-920x517.png');
-    background-size: cover;
   "
 >
-  <div>
-    <ul id="messageList"></ul>
-    <!-- <p>{{typingOb | async}}</p> -->
-    <!-- <p>{{typing}}</p> -->
+  <div
+    class="msgContainer"
+    style="overflow-x: hidden; height: 500px"
+    #scrollMe
+    [scrollTop]="scrollMe.scrollHeight"
+  >
+    <ul id="messageList">
+      <li *ngFor="let data of messages">
+        <div class="right" *ngIf="data.username === username">
+          <p class="chat">{{ data.message }}</p>
+          <p class="time" style="color: white">
+            {{ data.timeStamp | date: "shortTime" }}
+          </p>
+        </div>
+        <div *ngIf="data.username != username" class="left">
+          <p class="chat">{{ data.message }}</p>
+          <p class="time">
+            {{ data.timeStamp | date: "shortTime" }}
+          </p>
+        </div>
+      </li>
+    </ul>
     <div *ngIf="typing" class="typing">
-      <p style="color: white; display: inline; padding-bottom: 10px;font-size: 16px;">
-        typing
-      </p>
+      <h6>typing</h6>
       <div
         class="dot"
         [@PulseAtEnds]="state ? 'open' : 'close'"

@@ -23,19 +23,19 @@ export class RegisterComponent implements OnInit {
   });
 
   onSubmit() {
-    console.log(this.userDetails.value);
-
-    sessionStorage.setItem('username', this.userDetails.value.username);
     const data = {
       username: this.userDetails.value.username,
       email: this.userDetails.value.email,
       password: this.userDetails.value.password,
     };
-    this.authService.saveContact(data).subscribe((res: any) => {
+    this.authService.register(data).subscribe((res: any) => {
       sessionStorage.setItem('token', res.result);
-      this.router.navigate(['/contacts']);
+      this.router.navigate(['/home/user/contact-list']);
     });
   }
 
+  goToLogin() {
+    this.router.navigate(['/auth/login']);
+  }
   ngOnInit(): void {}
 }

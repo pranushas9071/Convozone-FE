@@ -1,17 +1,2 @@
-<div>
-  <form [formGroup]="userDetails" (ngSubmit)="onSubmit()">
-    <span class="p-float-label">
-      <input
-        id="float-input"
-        type="text"
-        pInputText
-        formControlName="username"
-      />
-      <label for="float-input">Username</label>
-    </span>
-    <button pButton type="submit" label="Get in"></button>
-  </form>
-</div>
-<!-- routerLinkActive="active"
-      [routerLink]="['/chat']"
-      [queryParams]="{ username: userDetails.value.username }" -->
+<app-nav-bar></app-nav-bar>
+<router-outlet></router-outlet>

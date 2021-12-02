@@ -1,0 +1,12 @@
+<div>
+  <div *ngFor="let contact of contacts">
+    <div *ngIf="contact.username != username" class="contacts">
+      <a
+        routerLinkActive="active"
+        [routerLink]="['/home/chat/chatBox']"
+        [queryParams]="{ username: contact.username }"
+        >{{ contact.username }}</a
+      >
+    </div>
+  </div>
+</div>

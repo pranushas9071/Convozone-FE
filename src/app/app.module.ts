@@ -7,20 +7,16 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {CardModule} from 'primeng/card';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
-import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './home/home.component';
-import { ContactsComponent } from './contacts/contacts.component';
-import { AuthModule } from './auth/auth.module';
+// import { AuthModule } from './auth/auth.module';
+// import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChatBoxComponent,
-    HomeComponent,
-    ContactsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +29,21 @@ import { AuthModule } from './auth/auth.module';
     ProgressSpinnerModule,
     HttpClientModule,
     CardModule,
-    AuthModule
+    // AuthModule,
+    // HomeModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return sessionStorage.getItem('token');
+        },
+        disallowedRoutes: [
+          'http://localhost:3000/contacts/register',
+          'http://localhost:3000/contacts/login',
+        ],
+        allowedDomains: ['localhost:3000'],
+        authScheme: 'Bearer ',
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
