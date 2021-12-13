@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { io } from 'socket.io-client';
 import { CommonService } from 'src/app/services/common.service';
 import { ChatService } from '../../services/chat.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat-box',
@@ -51,8 +52,9 @@ export class ChatBoxComponent implements OnInit {
   messages: any;
   typing: boolean = false;
   state: boolean = true;
-  username: any;
-  chatWith: any;
+  username!: string;
+  chatWith!: string;
+  profile!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -68,6 +70,7 @@ export class ChatBoxComponent implements OnInit {
   ngOnInit(): void {
     this.router.queryParams.subscribe((params) => {
       this.chatWith = params['username'];
+      this.profile = `${environment.dpUrl}/${params['profile']}`;
     });
 
     this.socketConnection();
@@ -84,7 +87,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   socketConnection() {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io(environment.socketUrl, {
       transports: ['websocket'],
     });
 
@@ -137,7 +140,10 @@ export class ChatBoxComponent implements OnInit {
   getAllMessages() {
     this.chatService.getAllMessages(this.chatWith).subscribe((res: any) => {
       this.messages = res;
-      console.log(this.messages);
     });
+  }
+
+  goBack() {
+    window.history.back();
   }
 }

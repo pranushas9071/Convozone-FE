@@ -1,49 +1,158 @@
-<div>
-  <form
-    style="margin-top: 30px; margin-left: 50px"
-    [formGroup]="userDetails"
-    (ngSubmit)="onSubmit()"
-  >
-    <div class="inputs">
-      <span class="p-float-label">
-        <input
-          type="text"
-          id="inputtext"
-          formControlName="username"
-          pInputText
-        />
-        <label for="inputtext">Username</label>
-      </span>
+<div class="outer-container">
+  <div class="inner-container">
+    <div class="logo"><h6>ConvoZone</h6></div>
+    <div style="height: 230px; width: 400px">
+      <img
+        src="https://media.istockphoto.com/photos/businessman-working-with-smart-phone-and-digital-tablet-and-laptop-picture-id1004463298?k=20&m=1004463298&s=612x612&w=0&h=SufXJQ4Kj0r0QDOglBlSvIu1F0SsxzKQCIyQ5OMEQ1o="
+        height="100%"
+        width="100%"
+      />
     </div>
-    <div class="inputs">
-      <span class="p-float-label">
-        <input type="text" id="inputtext" formControlName="email" pInputText />
-        <label for="inputtext">Email</label>
-      </span>
+    <div>
+      <form [formGroup]="userDetails" (ngSubmit)="onSubmit()">
+        <div *ngIf="stage == 0" [@slideOut]>
+          <div class="inputs">
+            <span class="p-input-icon-left">
+              <i class="pi pi-user"></i>
+              <input
+                class="p-inputtext-lg"
+                type="text"
+                pInputText
+                formControlName="username"
+                placeholder="Username"
+              />
+            </span>
+          </div>
+          <div class="invalid">
+            <ng-container
+              *ngIf="
+                username?.invalid && (username?.touched || username?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="username?.errors?.['required']"
+                >Username required!</span
+              >
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+
+          <div class="inputs">
+            <span class="p-input-icon-left">
+              <i class="pi pi-envelope"></i>
+              <input
+                class="p-inputtext-lg"
+                type="email"
+                pInputText
+                formControlName="email"
+                placeholder="Email"
+              />
+            </span>
+          </div>
+          <div class="invalidMail">
+            <ng-container
+              *ngIf="
+                mail?.invalid && (mail?.touched || mail?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="mail?.errors?.['required']">Email required!</span>
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+
+          <!-- [disabled]="username.invalid || mail.invalid" -->
+          <button
+            pButton
+            class="p-button-lg next"
+            label="Next"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            (click)="incrementStage()"
+          ></button>
+        </div>
+
+        <div *ngIf="stage == 1" [@slideIn]>
+          <div class="inputs">
+            <span class="p-input-icon-left">
+              <i class="pi pi-lock"></i>
+              <input
+                class="p-inputtext-lg"
+                type="password"
+                pInputText
+                formControlName="password"
+                placeholder="Password"
+              />
+              <!-- <p-password [toggleMask]="true"></p-password> -->
+            </span>
+          </div>
+          <div class="invalid">
+            <ng-container
+              *ngIf="
+                pass?.invalid && (pass?.touched || pass?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="pass?.errors?.['required']">Password required!</span>
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+
+          <div class="inputs">
+            <span class="p-input-icon-left">
+              <i class="pi pi-lock"></i>
+              <input
+                class="p-inputtext-lg"
+                type="password"
+                pInputText
+                formControlName="confirmPassword"
+                placeholder="Confirm Password"
+              />
+            </span>
+          </div>
+          <div class="invalid">
+            <ng-container
+              *ngIf="
+                cPass?.invalid && (cPass?.touched || cPass?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="cPass?.errors?.['required']"
+                >Confirm password required!</span
+              >
+              <span *ngIf="cPass?.errors?.['passwordMisMatch']"
+                >Password doesn't match!</span
+              >
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+          <button
+            pButton
+            class="p-button-lg backButton"
+            label="Back"
+            icon="pi pi-arrow-left"
+            iconPos="left"
+            (click)="decrementStage()"
+          ></button>
+          <button
+            class="p-button-lg regButton"
+            [disabled]="userDetails.invalid"
+            pButton
+            type="submit"
+          >
+            Register
+          </button>
+        </div>
+        <p>Already have an account? <a routerLink="/auth/login">Login</a></p>
+      </form>
     </div>
-    <div class="inputs">
-      <span class="p-float-label">
-        <input
-          type="password"
-          id="inputtext"
-          formControlName="password"
-          pInputText
-        />
-        <label for="inputtext">Password</label>
-      </span>
-    </div>
-    <div class="inputs">
-      <span class="p-float-label">
-        <input
-          type="password"
-          id="inputtext"
-          formControlName="confirmPassword"
-          pInputText
-        />
-        <label for="inputtext">Confirm Password</label>
-      </span>
-    </div>
-    <button pButton type="submit">Reister</button>
-    <button pButton type="button" (click)="goToLogin()">Login</button>
-  </form>
+  </div>
 </div>

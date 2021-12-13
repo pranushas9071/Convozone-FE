@@ -1,1 +1,66 @@
-<p>profile works!</p>
+<div class="outer-container">
+  <p-toast style="z-index: 1;" position="bottom-right"></p-toast>
+  <img
+    [src]="location"
+    height="150px"
+    width="150px"
+    style="border-radius: 50%"
+  />
+  <form [formGroup]="userDetails" (ngSubmit)="editProfile()">
+    <div class="image-upload">
+      <label for="file-input">
+        <i
+          class="pi pi-camera"
+          style="font-size: 2rem; color: midnightblue"
+        ></i>
+      </label>
+      <input
+        id="file-input"
+        type="file"
+        formControlName="profilePicture"
+        (change)="onChange($event)"
+      />
+    </div>
+    <div class="p-field p-grid">
+      <label class="p-col-fixed" style="width: 100px">Status</label>
+      <div class="p-col">
+        <input
+          type="text"
+          class="p-inputtext-lg"
+          pInputText
+          formControlName="status"
+        />
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <label class="p-col-fixed" style="width: 100px">D.O.B</label>
+      <div class="p-col">
+        <input
+          type="date"
+          class="p-inputtext-lg"
+          pInputText
+          formControlName="dob"
+        />
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <label class="p-col-fixed" style="width: 100px">Email</label>
+      <div class="p-col">
+        <input
+          type="text"
+          class="p-inputtext-lg"
+          pInputText
+          formControlName="email"
+        />
+      </div>
+    </div>
+    <button
+      type="submit"
+      pButton
+      pRipple
+      (click)="showSuccess()"
+      label="Update"
+      class="p-button-success p-mb-2 p-button-lg"
+    ></button>
+  </form>
+</div>

@@ -1,33 +1,14 @@
 <div
   style="
-    height: 530px;
-    margin-bottom: 40px;
-    overflow: overlay;
-    background-attachment: fixed;
+    background-image: url('https://cdn.wallpapersafari.com/70/49/VArEzt.gif');
   "
 >
-  <div
-    class="msgContainer"
-    style="overflow-x: hidden; height: 500px"
-    #scrollMe
-    [scrollTop]="scrollMe.scrollHeight"
-  >
-    <ul id="messageList">
-      <li *ngFor="let data of messages">
-        <div class="right" *ngIf="data.username === username">
-          <p class="chat">{{ data.message }}</p>
-          <p class="time" style="color: white">
-            {{ data.timeStamp | date: "shortTime" }}
-          </p>
-        </div>
-        <div *ngIf="data.username != username" class="left">
-          <p class="chat">{{ data.message }}</p>
-          <p class="time">
-            {{ data.timeStamp | date: "shortTime" }}
-          </p>
-        </div>
-      </li>
-    </ul>
+  <div class="header">
+    <i class="pi pi-arrow-left" (click)="goBack()"></i>
+    <img class="dp" src="{{ profile }}" />
+    <p [class.liftName]="typing" [class.originalPos]="!typing">
+      {{ chatWith }}
+    </p>
     <div *ngIf="typing" class="typing">
       <h6>typing</h6>
       <div
@@ -47,6 +28,38 @@
       ></div>
     </div>
   </div>
+  <div class="msgContainer" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <ul id="messageList">
+      <li *ngFor="let data of messages; let i = index">
+        <ng-container *ngIf="messages[i - 1]; else elseblk">
+          <div
+            class="date"
+            *ngIf="
+              (messages[i].timeStamp | date: 'shortDate') !=
+              (messages[i - 1].timeStamp | date: 'shortDate')
+            "
+          >
+            {{ messages[i].timeStamp | date: "longDate" }}
+          </div>
+        </ng-container>
+        <ng-template #elseblk>
+          <div class="date">{{ messages[i].timeStamp | date: "longDate" }}</div>
+        </ng-template>
+        <div class="right" *ngIf="data.username === username">
+          <p class="chat">{{ data.message }}</p>
+          <p class="time" style="color: white">
+            {{ data.timeStamp | date: "shortTime" }}
+          </p>
+        </div>
+        <div *ngIf="data.username != username" class="left">
+          <p class="chat">{{ data.message }}</p>
+          <p class="time">
+            {{ data.timeStamp | date: "shortTime" }}
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
   <div>
     <form [formGroup]="chats" (ngSubmit)="sendMessage()">
       <input
@@ -57,6 +70,7 @@
         autocomplete="off"
       />
       <button
+        class="p-button-lg"
         pButton
         type="submit"
         icon="pi pi-check"

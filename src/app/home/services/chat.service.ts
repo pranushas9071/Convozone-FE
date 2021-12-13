@@ -8,18 +8,28 @@ export class ChatService {
   constructor(private http: HttpClient) {}
 
   saveMessage(data: any) {
-    return this.http.post(`http://localhost:3000/user/saveMessage`, data);
+    return this.http.post(`http://localhost:3000/chat/message`, data);
   }
 
-  getAllMessages(to:string) {
-    return this.http.get(`http://localhost:3000/user/allMessages?to=${to}`);
+  getAllMessages(to: string) {
+    return this.http.get(`http://localhost:3000/chat/allMessages?to=${to}`);
   }
 
   getAllContacts() {
-    return this.http.get(`http://localhost:3000/contacts/allContacts`);
+    return this.http.get(
+      `http://localhost:3000/contacts/allContacts`
+    );
   }
 
-  saveContact(data: any) {
-    return this.http.post(`http://localhost:3000/contacts/saveContact`, data);
+  getUserDetails() {
+    return this.http.get(`http://localhost:3000/contacts/self`);
+  }
+
+  upload(data: any) {
+    return this.http.post(`http://localhost:3000/contacts/upload`, data);
+  }
+
+  getChatDetails() {
+    return this.http.get(`http://localhost:3000/chat/allChatDetails`);
   }
 }

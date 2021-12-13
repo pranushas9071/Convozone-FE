@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
+import {PasswordModule} from 'primeng/password';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
@@ -25,6 +26,7 @@ import { AuthComponent } from './auth.component';
     HttpClientModule,
     ButtonModule,
     InputTextModule,
+    PasswordModule
   ]
 })
 export class AuthModule { }

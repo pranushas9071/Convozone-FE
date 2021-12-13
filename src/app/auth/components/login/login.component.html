@@ -1,11 +1,9 @@
-<div class="container">
+<div class="outer-container">
   <div class="inner-container">
     <div class="logo"><h6>ConvoZone</h6></div>
     <div style="height: 230px; width: 400px">
       <img
         src="https://media.istockphoto.com/photos/businessman-working-with-smart-phone-and-digital-tablet-and-laptop-picture-id1004463298?k=20&m=1004463298&s=612x612&w=0&h=SufXJQ4Kj0r0QDOglBlSvIu1F0SsxzKQCIyQ5OMEQ1o="
-        height="100%"
-        width="100%"
       />
     </div>
     <div>
@@ -14,6 +12,7 @@
           <span class="p-input-icon-left">
             <i class="pi pi-user"></i>
             <input
+              class="p-inputtext-lg"
               type="text"
               pInputText
               formControlName="username"
@@ -24,9 +23,14 @@
         </div>
         <div class="invalid">
           <ng-container
-            *ngIf="username?.invalid && (username?.touched || username?.dirty); else elseblk"
+            *ngIf="
+              username?.invalid && (username?.touched || username?.dirty);
+              else elseblk
+            "
           >
-            <span *ngIf="username?.errors?.['required']">Username required!</span>
+            <span *ngIf="username?.errors?.['required']"
+              >Username required!</span
+            >
           </ng-container>
           <ng-template #elseblk>
             <span>&nbsp;</span>
@@ -36,6 +40,7 @@
           <span class="p-input-icon-left">
             <i class="pi pi-lock"></i>
             <input
+              class="p-inputtext-lg"
               type="password"
               pInputText
               formControlName="password"
@@ -47,15 +52,12 @@
         <div class="invalid">
           <ng-container
             *ngIf="
-              (pass?.invalid &&
-                (pass?.touched || pass?.dirty)) ||
+              (pass?.invalid && (pass?.touched || pass?.dirty)) ||
                 loginResultFailed;
               else elseblk
             "
           >
-            <span *ngIf="pass?.errors?.['required']"
-              >Password required!</span
-            >
+            <span *ngIf="pass?.errors?.['required']">Password required!</span>
             <span *ngIf="loginResultFailed; else elseblk">
               Invalid username or password
             </span>

@@ -10,7 +10,7 @@
     <div class="product-item">
       <div class="image-container">
         <img
-          src="{{dpBaseUrl}}/{{ contact.result[0].dp }}"
+          src="http://172.24.144.29:8080/{{ contact.dp }}"
           [alt]="contact.name"
           class="product-image"
         />
@@ -21,16 +21,13 @@
             class="stretched-link"
             routerLinkActive="active"
             [routerLink]="['/home/chat/chatBox']"
-            [queryParams]="{
-              username: contact._id,
-              profile: contact.result[0].dp
-            }"
-            >{{ contact._id }}</a
+            [queryParams]="{ username: contact.username }"
+            >{{ contact.username }}</a
           >
         </h5>
-        <i class="pi pi-calendar product-category-icon"></i>
-        <span *ngIf="contact.result.length != 0" class="product-category">{{
-          contact.lastTime | date: "short"
+        <i *ngIf="contact.status" class="pi pi-slack product-category-icon"></i>
+        <span *ngIf="contact.status" class="product-category">{{
+          contact.status
         }}</span>
       </div>
       <!-- <div class="product-list-action">

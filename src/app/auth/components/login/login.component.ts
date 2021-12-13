@@ -52,5 +52,7 @@ export class LoginComponent implements OnInit {
   changeLoginResult() {
     this.loginResultFailed = false;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    sessionStorage.removeItem('token');
+  }
 }
