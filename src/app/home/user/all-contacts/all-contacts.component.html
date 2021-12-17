@@ -1,0 +1,44 @@
+<p-orderList
+  [value]="contacts"
+  [listStyle]="{ 'max-height': '35rem' }"
+  header="List of Contacts"
+  filterBy="username"
+  filterPlaceholder="Search"
+  [dragdrop]="true"
+>
+  <ng-template let-contact pTemplate="item">
+    <div class="product-item">
+      <div class="image-container">
+        <img
+          src="http://172.24.144.29:8080/{{ contact.dp }}"
+          [alt]="contact.name"
+          class="product-image"
+        />
+      </div>
+      <div class="product-list-detail">
+        <h5 class="p-mb-2">
+          <a
+            class="stretched-link"
+            routerLinkActive="active"
+            [routerLink]="['/home/chat/chatBox']"
+            [queryParams]="{
+              username: contact.username,
+              profile: contact.dp
+            }"
+            >{{ contact.username }}</a
+          >
+        </h5>
+        <i *ngIf="contact.status" class="pi pi-slack product-category-icon"></i>
+        <span *ngIf="contact.status" class="product-category">{{
+          contact.status
+        }}</span>
+      </div>
+      <!-- <div class="product-list-action">
+        <h6 class="p-mb-2">${{ contact.price }}</h6>
+        <span [class]="'product-badge status-' + contact.inventoryStatus">{{
+          contact.inventoryStatus
+        }}</span>
+      </div> -->
+    </div>
+  </ng-template>
+</p-orderList>

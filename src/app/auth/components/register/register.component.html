@@ -1,0 +1,195 @@
+<div class="outer-container">
+  <div class="inner-container">
+    <div class="logo"><h6>ConvoZone</h6></div>
+    <div style="height: 230px; width: 400px">
+      <img
+        src="https://media.istockphoto.com/photos/businessman-working-with-smart-phone-and-digital-tablet-and-laptop-picture-id1004463298?k=20&m=1004463298&s=612x612&w=0&h=SufXJQ4Kj0r0QDOglBlSvIu1F0SsxzKQCIyQ5OMEQ1o="
+        height="100%"
+        width="100%"
+      />
+    </div>
+    <div>
+      <form [formGroup]="userDetails" (ngSubmit)="onSubmit()">
+        <div *ngIf="stage == 0" [@slideOut]>
+          <div class="inputs">
+            <span class="p-input-icon-left">
+              <i class="pi pi-user"></i>
+              <input
+                class="p-inputtext-lg"
+                type="text"
+                pInputText
+                formControlName="username"
+                placeholder="Username"
+              />
+            </span>
+          </div>
+          <div class="invalid">
+            <ng-container
+              *ngIf="
+                username?.invalid && (username?.touched || username?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="username?.errors?.['required']"
+                >Username required!</span
+              >
+              <span *ngIf="username?.errors?.['minlength']"
+                >Username must be atleast 4 characters long!</span
+              >
+              <span *ngIf="username?.errors?.['pattern']"
+                >Please provide a valid username</span
+              >
+              <span *ngIf="username?.errors?.['otherCaharactersPresent']"
+                >Username should contain only alphabets!</span
+              >
+              <span *ngIf="username?.errors?.['usernameTaken']"
+                >Username taken!</span
+              >
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+
+          <div class="inputs">
+            <span class="p-input-icon-left">
+              <i class="pi pi-envelope"></i>
+              <input
+                class="p-inputtext-lg"
+                type="email"
+                pInputText
+                formControlName="email"
+                placeholder="Email"
+              />
+            </span>
+          </div>
+          <div class="invalidMail">
+            <ng-container
+              *ngIf="
+                mail?.invalid && (mail?.touched || mail?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="mail?.errors?.['required']">Email required!</span>
+              <span *ngIf="mail?.errors?.['pattern']||mail?.errors?.['email']"
+                >Please provide a valid email id</span
+              >
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+
+          <button
+            pButton
+            class="p-button-lg next"
+            label="Next"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            (click)="incrementStage()"
+          ></button>
+        </div>
+
+        <div *ngIf="stage == 1" [@slideIn]>
+          <div class="inputs">
+            <p-password
+              (onBlur)="markAsTouched()"
+              class="p-inputtext-lg passwordField"
+              [ngClass]="{'ng-invalid ng-dirty':pass?.touched}"
+              formControlName="password"
+              placeholder="Password"
+              strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
+            ></p-password>
+          </div>
+          <button
+            pButton
+            (click)="showInfoDialog()"
+            pRipple
+            type="button"
+            icon="pi pi-exclamation-circle"
+            class="p-button-rounded p-button-danger p-button-text p-button-lg"
+          ></button>
+          <p-dialog
+            header="Password must contain"
+            [(visible)]="displayInfo"
+            [style]="{ width: '17vw', height: '14.5vw', padding: '0px' }"
+          >
+            <ul>
+              <li>At least one lowercase</li>
+              <li>At least one uppercase</li>
+              <li>At least one numeric</li>
+              <li>Minimum 8 characters</li>
+            </ul>
+            <ng-template pTemplate="footer">
+              <p-button
+                icon="pi pi-check"
+                (click)="displayInfo = false"
+                label="Ok"
+                styleClass="p-button-text"
+              ></p-button>
+            </ng-template>
+          </p-dialog>
+          <div class="invalid">
+            <ng-container
+              *ngIf="
+                pass?.invalid && (pass?.touched || pass?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="pass?.errors?.['required']">Password required!</span>
+              <span *ngIf="pass?.errors?.['pattern']">&nbsp;</span>
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+
+          <div class="inputs">
+            <input
+              class="p-inputtext-lg"
+              type="password"
+              pInputText
+              formControlName="confirmPassword"
+              placeholder="Re-enter password"
+            />
+          </div>
+          <div class="invalid">
+            <ng-container
+              *ngIf="
+                cPass?.invalid && (cPass?.touched || cPass?.dirty);
+                else elseblk
+              "
+            >
+              <span *ngIf="cPass?.errors?.['required']"
+                >Confirm password required!</span
+              >
+              <span *ngIf="cPass?.errors?.['passwordMisMatch']"
+                >Password doesn't match!</span
+              >
+            </ng-container>
+            <ng-template #elseblk>
+              <span>&nbsp;</span>
+            </ng-template>
+          </div>
+          <button
+            pButton
+            class="p-button-lg backButton"
+            label="Back"
+            icon="pi pi-arrow-left"
+            iconPos="left"
+            (click)="decrementStage()"
+          ></button>
+          <button
+            class="p-button-lg regButton"
+            [disabled]="userDetails.invalid"
+            pButton
+            type="submit"
+          >
+            Register
+          </button>
+        </div>
+        <p>Already have an account? <a routerLink="/auth/login">Login</a></p>
+      </form>
+    </div>
+  </div>
+</div>

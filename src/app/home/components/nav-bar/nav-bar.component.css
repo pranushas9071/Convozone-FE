@@ -1,0 +1,49 @@
+.headings {
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+:host ::ng-deep .p-toolbar {
+  background-color: darkcyan;
+  padding: 1.1rem;
+}
+:host ::ng-deep .pi-cog {
+  color: white;
+}
+:host ::ng-deep .p-toolbar-group-left,
+.p-toolbar-group-right {
+  display: flex;
+  align-items: center;
+  font-size: large;
+}
+:host ::ng-deep .p-toolbar-group-left,
+.p-toolbar-group-right {
+  font-size: large;
+}
+:host ::ng-deep .p-button:enabled:hover {
+  border: none;
+  background-color: darkcyan;
+}
+:host ::ng-deep .p-button:enabled:focus {
+  border: none;
+  box-shadow: none;
+  background-color: darkcyan;
+}
+:host ::ng-deep .p-button {
+  border: none;
+  background-color: darkcyan;
+}
+:host ::ng-deep .p-button-label {
+  font-size: larger;
+  font-weight: bold;
+}
+:host ::ng-deep .p-splitbutton .p-splitbutton-defaultbutton {
+  padding-right: 0px;
+}
+:host ::ng-deep .p-button .p-button-icon-left {
+  font-weight: bold;
+}
+.headings:focus{
+  color: bisque;
+}

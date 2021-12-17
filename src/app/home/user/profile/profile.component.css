@@ -1,0 +1,50 @@
+.outer-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+:host ::ng-deep .p-inputtext {
+  margin-bottom: 20px;
+  width: 400px;
+}
+.image-upload > input {
+  display: none;
+}
+.image-upload i {
+  width: 80px;
+  cursor: pointer;
+}
+.image-upload {
+  margin-left: 257px;
+  margin-bottom: 20px;
+}
+form {
+  position: absolute;
+  margin-top: 487px;
+  margin-left: 656px;
+}
+:host ::ng-deep .p-button.p-button-lg {
+  margin-left: 151px;
+}
+.invalid {
+  color: red;
+  font-size: 14px;
+  margin-top: -12px;
+}
+:host ::ng-deep .p-calendar .p-inputtext{
+  width: 400px;
+}
+/* .calendar-input{
+  width: 400px;
+} */
+:host ::ng-deep .p-datepicker table th {
+  padding: 0.5rem 0.5rem 0.5rem 1rem !important;
+}
+:host ::ng-deep .p-datepicker table td {
+  padding: 0px !important;
+}
+.testing{
+  background: red !important;
+  border: 2px solid black !important;
+}

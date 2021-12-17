@@ -1,0 +1,100 @@
+<div class="outer-container">
+  <p-toast position="bottom-right"></p-toast>
+  <img
+    [src]="location"
+    height="150px"
+    width="150px"
+    style="border-radius: 50%"
+  />
+  <form [formGroup]="userDetails" (ngSubmit)="editProfile()">
+    <div class="image-upload">
+      <label for="file-input">
+        <i
+          class="pi pi-camera"
+          style="font-size: 2rem; color: midnightblue"
+        ></i>
+      </label>
+      <input
+        id="file-input"
+        type="file"
+        formControlName="profilePicture"
+        (change)="onChange($event)"
+      />
+    </div>
+    <div class="p-field p-grid">
+      <label class="p-col-fixed" style="width: 100px">Status</label>
+      <div class="p-col">
+        <input
+          type="text"
+          class="p-inputtext-lg"
+          pInputText
+          formControlName="status"
+        />
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <label class="p-col-fixed" style="width: 100px">D.O.B</label>
+      <div class="p-col">
+        <!-- <input
+          type="date"
+          class="p-inputtext-lg"
+          pInputText
+          formControlName="dob"
+        /> -->
+        <p-calendar
+          class="p-inputtext-lg calendar-input"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          formControlName="dob"
+          dateFormat="dd/mm/yy"
+          placeholder="dd/mm/yyyy"
+        ></p-calendar>
+      </div>
+    </div>
+    <div class="invalid">
+      <ng-container
+        *ngIf="dob?.invalid && (dob?.touched || dob?.dirty); else elseblk"
+      >
+        <span *ngIf="dob?.errors?.['required']"
+          >Please provide a valid D.O.B</span
+        >
+      </ng-container>
+      <ng-template #elseblk>
+        <span>&nbsp;</span>
+      </ng-template>
+    </div>
+    <div class="p-field p-grid">
+      <label class="p-col-fixed" style="width: 100px">Email</label>
+      <div class="p-col">
+        <input
+          type="text"
+          class="p-inputtext-lg"
+          pInputText
+          formControlName="email"
+        />
+      </div>
+    </div>
+    <div class="invalid">
+      <ng-container
+        *ngIf="mail?.invalid && (mail?.touched || mail?.dirty); else elseblk"
+      >
+        <span *ngIf="mail?.errors?.['pattern']||mail?.errors?.['email']"
+          >Please provide a valid email id</span
+        >
+      </ng-container>
+      <ng-template #elseblk>
+        <span>&nbsp;</span>
+      </ng-template>
+    </div>
+
+    <button
+      type="submit"
+      pButton
+      pRipple
+      (click)="showSuccess()"
+      label="Update"
+      class="p-button-success p-mb-2 p-button-lg"
+      styleClass="testing"
+    ></button>
+  </form>
+</div>
