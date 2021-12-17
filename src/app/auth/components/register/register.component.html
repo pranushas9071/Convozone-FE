@@ -33,6 +33,18 @@
               <span *ngIf="username?.errors?.['required']"
                 >Username required!</span
               >
+              <span *ngIf="username?.errors?.['minlength']"
+                >Username must be atleast 4 characters long!</span
+              >
+              <span *ngIf="username?.errors?.['pattern']"
+                >Please provide a valid username</span
+              >
+              <span *ngIf="username?.errors?.['otherCaharactersPresent']"
+                >Username should contain only alphabets!</span
+              >
+              <span *ngIf="username?.errors?.['usernameTaken']"
+                >Username taken!</span
+              >
             </ng-container>
             <ng-template #elseblk>
               <span>&nbsp;</span>
@@ -59,13 +71,15 @@
               "
             >
               <span *ngIf="mail?.errors?.['required']">Email required!</span>
+              <span *ngIf="mail?.errors?.['pattern']||mail?.errors?.['email']"
+                >Please provide a valid email id</span
+              >
             </ng-container>
             <ng-template #elseblk>
               <span>&nbsp;</span>
             </ng-template>
           </div>
 
-          <!-- [disabled]="username.invalid || mail.invalid" -->
           <button
             pButton
             class="p-button-lg next"
@@ -78,18 +92,43 @@
 
         <div *ngIf="stage == 1" [@slideIn]>
           <div class="inputs">
-            <span class="p-input-icon-left">
-              <i class="pi pi-lock"></i>
-              <input
-                class="p-inputtext-lg"
-                type="password"
-                pInputText
-                formControlName="password"
-                placeholder="Password"
-              />
-              <!-- <p-password [toggleMask]="true"></p-password> -->
-            </span>
+            <p-password
+              (onBlur)="markAsTouched()"
+              class="p-inputtext-lg passwordField"
+              [ngClass]="{'ng-invalid ng-dirty':pass?.touched}"
+              formControlName="password"
+              placeholder="Password"
+              strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
+            ></p-password>
           </div>
+          <button
+            pButton
+            (click)="showInfoDialog()"
+            pRipple
+            type="button"
+            icon="pi pi-exclamation-circle"
+            class="p-button-rounded p-button-danger p-button-text p-button-lg"
+          ></button>
+          <p-dialog
+            header="Password must contain"
+            [(visible)]="displayInfo"
+            [style]="{ width: '17vw', height: '14.5vw', padding: '0px' }"
+          >
+            <ul>
+              <li>At least one lowercase</li>
+              <li>At least one uppercase</li>
+              <li>At least one numeric</li>
+              <li>Minimum 8 characters</li>
+            </ul>
+            <ng-template pTemplate="footer">
+              <p-button
+                icon="pi pi-check"
+                (click)="displayInfo = false"
+                label="Ok"
+                styleClass="p-button-text"
+              ></p-button>
+            </ng-template>
+          </p-dialog>
           <div class="invalid">
             <ng-container
               *ngIf="
@@ -98,6 +137,7 @@
               "
             >
               <span *ngIf="pass?.errors?.['required']">Password required!</span>
+              <span *ngIf="pass?.errors?.['pattern']">&nbsp;</span>
             </ng-container>
             <ng-template #elseblk>
               <span>&nbsp;</span>
@@ -105,16 +145,13 @@
           </div>
 
           <div class="inputs">
-            <span class="p-input-icon-left">
-              <i class="pi pi-lock"></i>
-              <input
-                class="p-inputtext-lg"
-                type="password"
-                pInputText
-                formControlName="confirmPassword"
-                placeholder="Confirm Password"
-              />
-            </span>
+            <input
+              class="p-inputtext-lg"
+              type="password"
+              pInputText
+              formControlName="confirmPassword"
+              placeholder="Re-enter password"
+            />
           </div>
           <div class="invalid">
             <ng-container

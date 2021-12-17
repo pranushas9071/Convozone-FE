@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { delay, map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidationService {
 
-  constructor() { }
+  constructor(private authService:AuthService) { }
 
   passwordValidator(password: string, confirmPassword: string) {
     return (formGroup: FormGroup) => {
@@ -25,6 +27,21 @@ export class ValidationService {
         confirmPasswordControl.setErrors(null);
       }
       return null;
+    };
+  }
+
+  usernameValidator() {
+    return (control: AbstractControl) => {
+      return this.authService
+        .validateUsername({ username: control.value })
+        .pipe(
+          map((res:any) => {
+            if (control.value.match(/^[A-Za-z]+$/) == null)
+              return { otherCaharactersPresent: true };
+            else return res.usernameTaken ? { usernameTaken: true } : null;
+          })
+        )
+        // .pipe(delay(500));
     };
   }
 }

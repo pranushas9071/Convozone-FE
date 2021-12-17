@@ -8,7 +8,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import { CommonService } from 'src/app/services/common.service';
 import { ChatService } from '../../services/chat.service';
 import { environment } from 'src/environments/environment';
@@ -48,7 +48,7 @@ import { environment } from 'src/environments/environment';
   ],
 })
 export class ChatBoxComponent implements OnInit {
-  socket: any;
+  socket!: Socket;
   messages: any;
   typing: boolean = false;
   state: boolean = true;
@@ -73,9 +73,7 @@ export class ChatBoxComponent implements OnInit {
       this.profile = `${environment.dpUrl}/${params['profile']}`;
     });
 
-    this.socketConnection();
     this.chats.get('message')?.valueChanges.subscribe((msg) => {
-      console.log(msg, !msg);
       if (!msg) {
         this.notifyTypingStopped();
       } else {
@@ -83,18 +81,18 @@ export class ChatBoxComponent implements OnInit {
       }
     });
     this.username = this.commonService.getUsername();
+    this.socketConnection();
     this.getAllMessages();
   }
 
   socketConnection() {
-    this.socket = io(environment.socketUrl, {
+    this.socket = io(environment.baseUrl, {
       transports: ['websocket'],
+      query: { token: sessionStorage.getItem('token') },
     });
 
-    this.socket.on('sendToAllClients', (data: string) => {
-      if (data) {
-        this.getAllMessages();
-      }
+    this.socket.on('messageAlert', () => {
+      this.getAllMessages();
     });
 
     this.socket.on('start typing', () => {
@@ -103,18 +101,21 @@ export class ChatBoxComponent implements OnInit {
 
     this.socket.on('stop typing', () => {
       this.typing = false;
-      console.log('typing stopped');
     });
-
-    console.log('Connecting...');
   }
 
   notifyTyping() {
-    this.socket.emit('start typing');
+    this.socket.emit('start typing', {
+      info: 'typing started',
+      to: this.chatWith,
+    });
   }
 
   notifyTypingStopped() {
-    this.socket.emit('stop typing');
+    this.socket.emit('stop typing', {
+      info: 'typing stopped',
+      to: this.chatWith,
+    });
   }
 
   sendMessage() {
@@ -126,7 +127,10 @@ export class ChatBoxComponent implements OnInit {
         to: this.chatWith,
       };
       this.chatService.saveMessage(data).subscribe((res) => {
-        this.socket.emit('chat message', 'A message alert');
+        this.socket.emit('chat message', {
+          info: 'a message alert',
+          to: this.chatWith,
+        });
         this.getAllMessages();
         this.chats.setValue({ message: '' });
       });
@@ -144,6 +148,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   goBack() {
+    this.socket.disconnect();
     window.history.back();
   }
 }

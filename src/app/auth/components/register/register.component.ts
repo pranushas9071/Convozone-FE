@@ -33,11 +33,37 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {}
   stage = 0;
+  displayInfo: boolean = false;
   userDetails = this.fb.group(
     {
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      username: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.pattern(/(\b(?:([A-Za-z0-9])(?!\2{2}))+\b)/),
+          ],
+          asyncValidators: [this.validatorService.usernameValidator()],
+        },
+      ],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(
+            /(\b^[a-z]{1}(?:([A-Za-z0-9._])(?!\2{2})){3,}@(?:([a-z])(?!\3{2})){5,}(\.[a-z]{3}|\.[a-z]{2,3}\.[a-z]{2})$\b)/
+          ),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/),
+        ],
+      ],
       confirmPassword: ['', Validators.required],
     },
     {
@@ -66,6 +92,14 @@ export class RegisterComponent implements OnInit {
 
   decrementStage() {
     this.stage = this.stage - 1;
+  }
+
+  showInfoDialog() {
+    this.displayInfo = true;
+  }
+
+  markAsTouched() {
+    this.userDetails.get('password')?.markAsTouched();
   }
 
   get username() {

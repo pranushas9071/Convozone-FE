@@ -5,6 +5,7 @@ form {
 .inputs {
   margin-bottom: 7px;
   margin-top: 7px;
+  display: inline-block;
 }
 .invalid {
   color: red;
@@ -33,6 +34,7 @@ input {
 }
 .backButton {
   margin-top: 7px;
+  margin-left: -9px;
 }
 button:focus {
   box-shadow: none;
@@ -92,4 +94,22 @@ h6 {
 .p-button .p-button-icon-right {
   margin-left: 0.5rem;
   margin-top: 4px;
+}
+:host ::ng-deep .p-inputtext {
+  font-family: "primeicons";
+}
+:host ::ng-deep .p-password-panel {
+  margin-top: -130px;
+}
+.passwordField {
+  width: 150px;
+}
+.p-button {
+  vertical-align: middle;
+}
+:host ::ng-deep .p-dialog .p-dialog-content {
+  overflow: hidden;
+}
+:host ::ng-deep .p-dialog .p-dialog-header-icons {
+  display: none;
 }

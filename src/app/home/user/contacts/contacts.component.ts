@@ -22,8 +22,6 @@ export class ContactsComponent implements OnInit {
     this.username = this.commonService.getUsername();
     this.contactService.getChatDetails().subscribe((data) => {
       this.contacts = data;
-      console.log(this.contacts);
-      
     });
   }
 }

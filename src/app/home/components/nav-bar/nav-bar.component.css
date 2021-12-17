@@ -5,7 +5,7 @@
   font-weight: bold;
 }
 :host ::ng-deep .p-toolbar {
-  background-color: midnightblue;
+  background-color: darkcyan;
   padding: 1.1rem;
 }
 :host ::ng-deep .pi-cog {
@@ -23,16 +23,16 @@
 }
 :host ::ng-deep .p-button:enabled:hover {
   border: none;
-  background-color: midnightblue;
+  background-color: darkcyan;
 }
 :host ::ng-deep .p-button:enabled:focus {
   border: none;
   box-shadow: none;
-  background-color: midnightblue;
+  background-color: darkcyan;
 }
 :host ::ng-deep .p-button {
   border: none;
-  background-color: midnightblue;
+  background-color: darkcyan;
 }
 :host ::ng-deep .p-button-label {
   font-size: larger;
@@ -45,5 +45,5 @@
   font-weight: bold;
 }
 .headings:focus{
-  color: burlywood;
+  color: bisque;
 }

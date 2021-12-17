@@ -21,7 +21,10 @@
             class="stretched-link"
             routerLinkActive="active"
             [routerLink]="['/home/chat/chatBox']"
-            [queryParams]="{ username: contact.username }"
+            [queryParams]="{
+              username: contact.username,
+              profile: contact.dp
+            }"
             >{{ contact.username }}</a
           >
         </h5>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { ChatService } from '../../services/chat.service';
@@ -26,11 +26,21 @@ export class ProfileComponent implements OnInit {
 
   userData: any;
   location: any;
+  minDate: Date = new Date(1960, 1, 1, 12, 0, 0, 0);
+  maxDate: Date = new Date();
 
   userDetails = this.fb.group({
     profilePicture: [''],
-    email: [''],
-    dob: [''],
+    email: [
+      '',
+      [
+        Validators.email,
+        Validators.pattern(
+          /(\b^[a-z]{1}(?:([A-Za-z0-9._])(?!\2{2})){3,}@(?:([a-z])(?!\3{2})){5,}(\.[a-z]{3}|\.[a-z]{2,3}\.[a-z]{2})$\b)/
+        ),
+      ],
+    ],
+    dob: ['', Validators.required],
     status: [''],
   });
   file?: File;
@@ -45,15 +55,14 @@ export class ProfileComponent implements OnInit {
     formData.append('dob', this.userDetails.value.dob);
     formData.append('status', this.userDetails.value.status);
     if (this.file) formData.append('file', this.file);
-    this.userService.upload(formData).subscribe((result: any) => {
-      console.log(result);
-    });
+    this.userService.upload(formData).subscribe((result: any) => {});
   }
 
   showSavedUserData() {
+    if (!!this.userData.dob)
+      this.userDetails.patchValue({ dob: new Date(this.userData.dob) });
     this.userDetails.patchValue({
       email: this.userData.email,
-      dob: this.userData.dob,
       status: this.userData.status,
     });
   }
@@ -64,5 +73,13 @@ export class ProfileComponent implements OnInit {
       summary: 'Success',
       detail: 'Successfully Updated',
     });
+  }
+
+  get mail() {
+    return this.userDetails.get('email');
+  }
+
+  get dob() {
+    return this.userDetails.get('dob');
   }
 }

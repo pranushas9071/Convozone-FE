@@ -6,6 +6,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PasswordModule} from 'primeng/password';
 import {OrderListModule} from 'primeng/orderlist';
 import {ToastModule} from 'primeng/toast';
+import {CalendarModule} from 'primeng/calendar';
 
 import { UserRoutingModule } from './user-routing.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -28,7 +29,8 @@ import { AllContactsComponent } from './all-contacts/all-contacts.component';
     InputTextModule,
     PasswordModule,
     OrderListModule,
-    ToastModule
+    ToastModule,
+    CalendarModule
   ]
 })
 export class UserModule { }

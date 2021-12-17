@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   dpUrl: 'http://172.24.144.29:8080',
-  socketUrl:'http://localhost:3000',
+  baseUrl:'http://localhost:3000',
 };
 
 /*
