@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../../services/chat.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private contactService: ChatService,
+    private socketService: SocketService
+  ) {}
   items: any;
   ngOnInit(): void {
     this.items = [
@@ -19,6 +24,18 @@ export class NavBarComponent implements OnInit {
       {
         label: 'Logout',
         icon: 'pi pi-arrow-circle-right',
+        command: () => {
+          this.contactService
+            .updateLastActiveDuration({
+              lastActive: new Date(),
+            })
+            .subscribe((res) => {
+              console.log(res);
+            });
+          sessionStorage.removeItem('token');
+          if (!!this.socketService.getSocket())
+            this.socketService.socket.disconnect();
+        },
         routerLink: ['/'],
       },
     ];

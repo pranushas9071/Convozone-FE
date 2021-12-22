@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SocketService } from '../../../home/services/socket.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private socketService: SocketService
   ) {}
 
   loginResultFailed: boolean = false;
@@ -36,6 +38,8 @@ export class LoginComponent implements OnInit {
       } else {
         this.loginResultFailed = false;
         sessionStorage.setItem('token', message.result);
+        this.socketService.connectSocket();
+        this.socketService.notifyOnline();
         this.router.navigate(['/home']);
       }
     });
@@ -52,7 +56,5 @@ export class LoginComponent implements OnInit {
   changeLoginResult() {
     this.loginResultFailed = false;
   }
-  ngOnInit(): void {
-    sessionStorage.removeItem('token');
-  }
+  ngOnInit(): void {}
 }

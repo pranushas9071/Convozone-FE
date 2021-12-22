@@ -31,4 +31,8 @@ export class ChatService {
   getChatDetails() {
     return this.http.get(`${environment.baseUrl}/chat/allChatDetails`);
   }
+
+  updateLastActiveDuration(data: any) {
+    return this.http.post(`${environment.baseUrl}/contacts/lastActive`, data);
+  }
 }

@@ -23,7 +23,8 @@
             [routerLink]="['/home/chat/chatBox']"
             [queryParams]="{
               username: contact.username,
-              profile: contact.dp
+              profile: contact.dp,
+              lastActive: contact.lastActive
             }"
             >{{ contact.username }}</a
           >

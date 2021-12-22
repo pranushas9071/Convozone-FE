@@ -47,6 +47,11 @@ export class ProfileComponent implements OnInit {
 
   onChange(event: any) {
     this.file = event.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event: any) => {
+      this.location = event.target.result;
+    };
   }
 
   editProfile() {
