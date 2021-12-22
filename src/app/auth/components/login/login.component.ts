@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SocketService } from 'src/app/home/services/socket.service';
+import { SocketService } from '../../../home/services/socket.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({

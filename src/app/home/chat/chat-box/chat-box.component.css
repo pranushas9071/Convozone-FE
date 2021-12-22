@@ -119,3 +119,8 @@ i {
   margin-top: 8px;
   margin-right: 15px;
 }
+.outer-container {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
+}
