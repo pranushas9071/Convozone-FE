@@ -5,13 +5,20 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { io, Socket } from 'socket.io-client';
+import { Socket } from 'socket.io-client';
 import { CommonService } from 'src/app/services/common.service';
-import { ChatService } from '../../services/chat.service';
 import { environment } from 'src/environments/environment';
+import { ChatService } from '../../services/chat.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-chat-box',
@@ -47,7 +54,8 @@ import { environment } from 'src/environments/environment';
     ]),
   ],
 })
-export class ChatBoxComponent implements OnInit {
+export class ChatBoxComponent implements OnInit, AfterViewChecked {
+  @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
   socket!: Socket;
   messages: any;
   typing: boolean = false;
@@ -55,12 +63,16 @@ export class ChatBoxComponent implements OnInit {
   username!: string;
   chatWith!: string;
   profile!: string;
+  userAvailable: boolean = false;
+  lastActive!: string;
+  today = new Date().toISOString();
 
   constructor(
     private fb: FormBuilder,
     private chatService: ChatService,
     private commonService: CommonService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private socketService: SocketService
   ) {}
 
   chats = this.fb.group({
@@ -71,6 +83,7 @@ export class ChatBoxComponent implements OnInit {
     this.router.queryParams.subscribe((params) => {
       this.chatWith = params['username'];
       this.profile = `${environment.dpUrl}/${params['profile']}`;
+      this.lastActive = params['lastActive'];
     });
 
     this.chats.get('message')?.valueChanges.subscribe((msg) => {
@@ -86,21 +99,31 @@ export class ChatBoxComponent implements OnInit {
   }
 
   socketConnection() {
-    this.socket = io(environment.baseUrl, {
-      transports: ['websocket'],
-      query: { token: sessionStorage.getItem('token') },
+    this.socket = this.socketService.getSocket();
+
+    this.socket.emit('check user state', {
+      info: 'Check user is online',
+      user: this.chatWith,
+    });
+
+    this.socket.on('online', (data) => {
+      if (data === this.chatWith) this.userAvailable = true;
+    });
+
+    this.socket.on('offline', (data) => {
+      if (data === this.chatWith) this.userAvailable = false;
     });
 
     this.socket.on('messageAlert', () => {
       this.getAllMessages();
     });
 
-    this.socket.on('start typing', () => {
-      this.typing = true;
+    this.socket.on('start typing', (data) => {
+      if (data === this.chatWith) this.typing = true;
     });
 
-    this.socket.on('stop typing', () => {
-      this.typing = false;
+    this.socket.on('stop typing', (data) => {
+      if (data === this.chatWith) this.typing = false;
     });
   }
 
@@ -147,8 +170,16 @@ export class ChatBoxComponent implements OnInit {
     });
   }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    this.myScrollContainer.nativeElement.scrollTop =
+      this.myScrollContainer.nativeElement.scrollHeight;
+  }
+
   goBack() {
-    this.socket.disconnect();
     window.history.back();
   }
 }

@@ -1,17 +1,33 @@
 <div
   style="
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
   "
 >
-<!-- background-image: url('https://cdn.wallpapersafari.com/70/49/VArEzt.gif'); -->
   <div class="header">
     <i class="pi pi-arrow-left" (click)="goBack()"></i>
     <img class="dp" src="{{ profile }}" />
-    <p [class.liftName]="typing" [class.originalPos]="!typing">
+    <!-- [class.originalPos]="!typing && !userAvailable" -->
+    <!-- [class.liftName]="typing || userAvailable" -->
+    <p class="liftName">
       {{ chatWith }}
     </p>
+    <div *ngIf="userAvailable && !typing" class="typing">
+      <h6>Online</h6>
+    </div>
+    <div *ngIf="!userAvailable && !typing" class="typing">
+      <h6 *ngIf="(lastActive|date:'shortDate')===(today|date:'shortDate');else elseblk">
+        last active today at
+        {{ lastActive | date: "shortTime" }}
+      </h6>
+      <ng-template #elseblk>
+        <h6>
+          last active on {{ lastActive | date: "dd/LL/yy" }} at
+          {{ lastActive | date: "shortTime" }}
+        </h6>
+      </ng-template>
+    </div>
     <div *ngIf="typing" class="typing">
       <h6>typing</h6>
       <div
@@ -31,7 +47,7 @@
       ></div>
     </div>
   </div>
-  <div class="msgContainer" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+  <div class="msgContainer" #scrollMe>
     <ul id="messageList">
       <li *ngFor="let data of messages; let i = index">
         <ng-container *ngIf="messages[i - 1]; else elseblk">
