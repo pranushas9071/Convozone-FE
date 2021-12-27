@@ -55,3 +55,24 @@ a {
 :host ::ng-deep .p-orderlist .p-orderlist-header {
   display: none;
 }
+.newMessageContainer {
+  padding: 0px 5px 0px 5px;
+  background-color: lightseagreen;
+  color: white;
+  display: flex;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  font-weight: 600;
+  border-radius: 50%;
+}
+.highLightDate {
+  color: lightseagreen;
+  font-weight: 600;
+}
+.highLightMessage {
+  color: lightseagreen;
+}
+.messageStyle {
+  font-weight: 600;
+}

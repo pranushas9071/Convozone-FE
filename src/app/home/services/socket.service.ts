@@ -24,6 +24,17 @@ export class SocketService {
     return this.socket;
   }
 
+  changeMessageState() {
+    this.socket.emit('message state changed');
+  }
+
+  checkUserState(user: string) {
+    this.socket.emit('check user state', {
+      info: 'Check user is online',
+      user: user,
+    });
+  }
+
   disconnectSocket() {
     this.socket.disconnect();
   }

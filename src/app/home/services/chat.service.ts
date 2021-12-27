@@ -25,7 +25,7 @@ export class ChatService {
   }
 
   upload(data: any) {
-    return this.http.post(`${environment.baseUrl}/contacts/upload`, data);
+    return this.http.put(`${environment.baseUrl}/contacts/upload`, data);
   }
 
   getChatDetails() {
@@ -34,5 +34,18 @@ export class ChatService {
 
   updateLastActiveDuration(data: any) {
     return this.http.post(`${environment.baseUrl}/contacts/lastActive`, data);
+  }
+
+  updateMessageStateOnLogin(state: string) {
+    return this.http.put(`${environment.baseUrl}/chat/messageReceived`, {
+      state: state,
+    });
+  }
+
+  updateMessageStateAsSeen(state: string, user: string) {
+    return this.http.put(`${environment.baseUrl}/chat/messageOpened`, {
+      state: state,
+      user: user,
+    });
   }
 }

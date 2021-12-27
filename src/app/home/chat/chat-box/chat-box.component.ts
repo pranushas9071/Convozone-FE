@@ -93,6 +93,11 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         this.notifyTyping();
       }
     });
+
+    //Update state of message in db to "seen"...
+    this.chatService
+      .updateMessageStateAsSeen('seen', this.chatWith)
+      .subscribe();
     this.username = this.commonService.getUsername();
     this.socketConnection();
     this.getAllMessages();
@@ -101,21 +106,41 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
   socketConnection() {
     this.socket = this.socketService.getSocket();
 
-    this.socket.emit('check user state', {
-      info: 'Check user is online',
-      user: this.chatWith,
-    });
+    //Emits "check user state" event to check user is online or offline
+    this.socketService.checkUserState(this.chatWith);
+    this.socketService.changeMessageState();
 
+    //--------------------Emitted by "check user state" event-----------------------------
     this.socket.on('online', (data) => {
       if (data === this.chatWith) this.userAvailable = true;
     });
-
     this.socket.on('offline', (data) => {
       if (data === this.chatWith) this.userAvailable = false;
     });
+    //------------------------------------------------------------------------------------
 
-    this.socket.on('messageAlert', () => {
-      this.getAllMessages();
+    //When a new message arrives...
+    this.socket.on('messageAlert', (data) => {
+      if (data === this.chatWith) {
+        this.getAllMessages();
+
+        //update new message's state as "seen" in db...
+        this.chatService
+          .updateMessageStateAsSeen('seen', this.chatWith)
+          .subscribe((res) => {
+
+            //Emits 'change in message state' event to display recent changes in message state to sender..
+            this.socket.emit('message seen', {
+              info: 'Message has been viewed',
+              user: this.chatWith,
+            });
+          });
+      }
+    });
+
+    //Emitted when state of message is changed...
+    this.socket.on('change in message state', (data) => {
+      if (data === this.chatWith) this.getAllMessages();
     });
 
     this.socket.on('start typing', (data) => {
@@ -180,6 +205,7 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
   }
 
   goBack() {
+    this.chatWith = '';
     window.history.back();
   }
 }

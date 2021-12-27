@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ChatService } from '../../../home/services/chat.service';
 import { SocketService } from '../../../home/services/socket.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private chatService: ChatService
   ) {}
 
   loginResultFailed: boolean = false;
@@ -38,8 +40,10 @@ export class LoginComponent implements OnInit {
       } else {
         this.loginResultFailed = false;
         sessionStorage.setItem('token', message.result);
+        this.chatService.updateMessageStateOnLogin("received").subscribe();
         this.socketService.connectSocket();
         this.socketService.notifyOnline();
+        this.socketService.changeMessageState();
         this.router.navigate(['/home']);
       }
     });
