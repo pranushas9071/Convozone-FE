@@ -1,31 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonService } from 'src/app/services/common.service';
-import { ChatService } from '../../services/chat.service';
-import { environment } from 'src/environments/environment';
-import { SocketService } from '../../services/socket.service';
 import { Socket } from 'socket.io-client';
+import { CommonService } from 'src/app/services/common.service';
+import { environment } from 'src/environments/environment';
+import { ChatService } from '../../services/chat.service';
+import { SocketService } from '../../services/socket.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.css'],
+  styleUrls: ['./contacts.component.scss'],
 })
 export class ContactsComponent implements OnInit {
-  contacts: any;
+  contacts: Array<any>=[];
   username: any;
   socket!: Socket;
   dpBaseUrl: string = environment.dpUrl;
+  theme = 'primaryTheme';
+
   constructor(
     private contactService: ChatService,
     private commonService: CommonService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
     this.username = this.commonService.getUsername();
     this.getChatDetails();
     this.socketEvents();
+    this.themeService.selectedTheme.subscribe((theme) => {
+      this.theme = theme;
+    });
   }
 
   socketEvents() {
@@ -36,7 +42,7 @@ export class ContactsComponent implements OnInit {
   }
 
   getChatDetails() {
-    this.contactService.getChatDetails().subscribe((data) => {
+    this.contactService.getChatDetails().subscribe((data:any) => {
       this.contacts = data;
     });
   }

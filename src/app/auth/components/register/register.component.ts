@@ -8,7 +8,7 @@ import { ValidationService } from '../../services/validation.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  styleUrls: ['./register.component.scss'],
   animations: [
     trigger('slideIn', [
       transition(':enter', [

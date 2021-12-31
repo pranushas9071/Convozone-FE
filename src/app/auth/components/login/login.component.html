@@ -1,18 +1,19 @@
 <div class="outer-container">
   <div class="inner-container">
     <div class="logo"><h6>ConvoZone</h6></div>
-    <div style="height: 230px; width: 400px">
+    <div class="img-container">
       <img
         src="https://media.istockphoto.com/photos/businessman-working-with-smart-phone-and-digital-tablet-and-laptop-picture-id1004463298?k=20&m=1004463298&s=612x612&w=0&h=SufXJQ4Kj0r0QDOglBlSvIu1F0SsxzKQCIyQ5OMEQ1o="
       />
     </div>
-    <div>
+    <div class="form-container">
       <form [formGroup]="loginDetails" (ngSubmit)="onLogin()">
         <div class="inputs">
           <span class="p-input-icon-left">
             <i class="pi pi-user"></i>
             <input
               class="p-inputtext-lg"
+              [ngClass]="{'input-invalid':loginResultFailed}"
               type="text"
               pInputText
               formControlName="username"
@@ -41,6 +42,7 @@
             <i class="pi pi-lock"></i>
             <input
               class="p-inputtext-lg"
+              [ngClass]="{'input-invalid':loginResultFailed}"
               type="password"
               pInputText
               formControlName="password"
@@ -66,9 +68,10 @@
             <span>&nbsp;</span>
           </ng-template>
         </div>
+        <div class="button-container">
         <button [disabled]="loginDetails.invalid" pButton type="submit">
           Login
-        </button>
+        </button></div>
         <p>
           Don't have an account? <a routerLink="/auth/register">Register</a>
         </p>

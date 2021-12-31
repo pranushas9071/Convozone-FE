@@ -1,18 +1,23 @@
-form {
-  margin-top: 23%;
-  margin-left: 26%;
-}
 .inputs {
   margin-bottom: 7px;
   margin-top: 7px;
+  display: inline-block;
 }
 .invalid {
   color: red;
   font-size: 12px;
   margin-top: 3px;
 }
+.invalidMail {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+}
 input.ng-invalid.ng-touched {
   border-color: red;
+}
+.p-inputtext:enabled:focus {
+  box-shadow: none;
 }
 img {
   width: 533px;
@@ -22,11 +27,13 @@ input {
   height: 50px;
   font-family: "primeicons";
 }
-button {
-  width: 65%;
-  font-size: 20px;
-  padding-left: 26%;
-  margin-top: 5px;
+.regButton {
+  margin-left: 24px;
+  margin-top: 7px;
+}
+.backButton {
+  margin-top: 7px;
+  margin-left: -9px;
 }
 button:focus {
   box-shadow: none;
@@ -59,13 +66,14 @@ h6 {
   background-size: cover;
   background-color: rgb(15 13 13 / 73%);
   background-blend-mode: multiply;
+  justify-content: center;
+  display: flex;
 }
 .inner-container {
   height: 87%;
-  margin-top: 4.5%;
+  margin-top: 70px;
   background-color: white;
-  margin-left: 34%;
-  margin-right: 34.8%;
+  width: 530px;
 }
 .logo {
   box-shadow: 1px 1px 2px 2px aliceblue;
@@ -77,4 +85,40 @@ h6 {
   background-color: #0d89ec;
   color: white;
   border-radius: 50%;
+}
+.img-container {
+  height: 291px;
+  width: 400px;
+}
+.form-container {
+  margin-top: 45px;
+  display: flex;
+  justify-content: center;
+}
+
+.next {
+  margin-left: 60px;
+  margin-top: 7px;
+}
+.p-button .p-button-icon-right {
+  margin-left: 0.5rem;
+  margin-top: 4px;
+}
+:host ::ng-deep .p-inputtext {
+  font-family: "primeicons";
+}
+:host ::ng-deep .p-password-panel {
+  margin-top: -130px;
+}
+.passwordField {
+  width: 150px;
+}
+.p-button {
+  vertical-align: middle;
+}
+:host ::ng-deep .p-dialog .p-dialog-content {
+  overflow: hidden;
+}
+:host ::ng-deep .p-dialog .p-dialog-header-icons {
+  display: none;
 }

@@ -18,15 +18,6 @@ form {
   text-align: center;
   color: wheat;
 }
-.right {
-  padding: 5px 10px 0px 10px;
-  width: 40%;
-  border-radius: 5px 0px 5px 5px;
-  background-color: #a3efd5;
-  float: right;
-  margin-left: 58%;
-  margin-bottom: 10px;
-}
 .time {
   color: grey;
   margin: 0px;
@@ -43,7 +34,6 @@ input {
 }
 button {
   border-radius: 0%;
-  background-color: #374bc3;
 }
 .typing {
   position: absolute;
@@ -72,14 +62,6 @@ ul {
 }
 ::-webkit-scrollbar {
   display: none;
-}
-.header {
-  position: fixed;
-  height: 68px;
-  width: 100%;
-  display: flex;
-  background-color: darkcyan;
-  color: white;
 }
 .msgContainer {
   overflow-x: hidden;
@@ -123,4 +105,8 @@ i {
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url("https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
+}
+:host ::ng-deep .p-button.p-button-icon-only {
+  height: 100%;
+  border-radius: 0px;
 }

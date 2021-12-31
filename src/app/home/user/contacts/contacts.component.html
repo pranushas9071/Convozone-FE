@@ -1,50 +1,74 @@
-<p-orderList
-  [value]="contacts"
-  [listStyle]="{ 'max-height': '35rem' }"
-  header="List of Contacts"
-  filterBy="username"
-  filterPlaceholder="Search"
-  [dragdrop]="true"
->
-  <ng-template let-contact pTemplate="item">
-    <div class="product-item">
-      <div class="image-container">
-        <img
-          src="{{ dpBaseUrl }}/{{ contact.result[0].dp }}"
-          [alt]="contact.name"
-          class="product-image"
-        />
-      </div>
-      <div class="product-list-detail">
-        <h5 class="p-mb-2">
-          <a
-            class="stretched-link"
-            routerLinkActive="active"
-            [routerLink]="['/home/chat/chatBox']"
-            [queryParams]="{
-              username: contact._id,
-              profile: contact.result[0].dp,
-              lastActive: contact.result[0].lastActive
-            }"
-            >{{ contact._id }}</a
-          >
-        </h5>
-        <!-- <i class="pi pi-calendar product-category-icon"></i> -->
-        <span
-          *ngIf="contact.result.length != 0"
-          class="product-category messageStyle"
-          [ngClass]="{ highLightMessage: contact.newMessages }"
-          >{{ contact.lastMessageDetails[0].msg }}</span
-        >
-      </div>
-      <div class="product-list-action">
-        <div *ngIf="contact.newMessages" class="newMessageContainer">
-          <p class="p-mb-2">{{ contact.newMessages }}</p>
+<div class="{{theme}} container text-center" *ngIf="contacts.length==0; else showChats">
+  <img
+    width="150px"
+    height="150px"
+    src="https://img.freepik.com/free-vector/cute-little-cartoon-chick-hatched-from-egg_194935-143.jpg?size=338&ext=jpg"
+  />
+  <h5>No conversations yet</h5>
+  <h6>It's nice to chat with someone</h6>
+  <p>Start chatting with people around you</p>
+  <a
+    pButton
+    label="Show Contacts"
+    class="p-mb-2 p-button-lg"
+    routerLinkActive="active"
+    routerLink="/home/user/contact-list"
+  ></a>
+</div>
+<ng-template #showChats>
+  <p-orderList
+    class="{{ theme }}"
+    [value]="contacts"
+    [listStyle]="{ 'max-height': '35rem' }"
+    header="List of Contacts"
+    filterBy="_id"
+    filterPlaceholder="Search"
+    [dragdrop]="true"
+  >
+    <ng-template let-contact pTemplate="item">
+      <div class="product-item">
+        <div class="image-container">
+          <img
+            *ngIf="contact.result[0].dp; else defaultImg"
+            src="{{ dpBaseUrl }}/{{ contact.result[0].dp }}"
+            [alt]="contact._id"
+            class="product-image"
+          />
+          <ng-template #defaultImg>
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png"
+          /></ng-template>
         </div>
-        <span [ngClass]="{ highLightDate: contact.newMessages }">{{
-          contact.lastMessageDetails[0].time | date: "shortDate"
-        }}</span>
+        <div class="product-list-detail">
+          <h5 class="p-mb-2">
+            <a
+              class="stretched-link"
+              routerLinkActive="active"
+              [routerLink]="['/home/chat/chatBox']"
+              [queryParams]="{
+                username: contact._id,
+                profile: contact.result[0].dp,
+                lastActive: contact.result[0].lastActive
+              }"
+              >{{ contact._id }}</a
+            >
+          </h5>
+          <span
+            *ngIf="contact.result.length != 0"
+            class="product-category messageStyle"
+            [ngClass]="{ highLightMessage: contact.newMessages }"
+            >{{ contact.lastMessageDetails[0].msg }}</span
+          >
+        </div>
+        <div class="product-list-action">
+          <div *ngIf="contact.newMessages" class="newMessageContainer">
+            <p class="p-mb-2">{{ contact.newMessages }}</p>
+          </div>
+          <span [ngClass]="{ highLightDate: contact.newMessages }">{{
+            contact.lastMessageDetails[0].time | date: "shortDate"
+          }}</span>
+        </div>
       </div>
-    </div>
-  </ng-template>
-</p-orderList>
+    </ng-template>
+  </p-orderList></ng-template
+>

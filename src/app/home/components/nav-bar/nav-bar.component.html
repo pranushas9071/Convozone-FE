@@ -1,9 +1,6 @@
-<p-toolbar>
+<p-toolbar class="{{theme}}">
   <div class="p-toolbar-group-left">
-    <a
-      class="headings"
-      routerLinkActive="active"
-      routerLink="/home/user/chats"
+    <a class="headings" routerLinkActive="active" routerLink="/home/user/chats"
       >CHATS</a
     >
     <a
@@ -20,6 +17,20 @@
       icon="pi pi-user"
       [model]="items"
     ></p-splitButton>
-    <i class="pi pi-cog" style="font-size: 1.5rem"></i>
+    <p-button
+      type="button"
+      icon="pi pi-cog"
+      (click)="visibleSidebar = true"
+    ></p-button>
   </div>
 </p-toolbar>
+<p-sidebar [(visible)]="visibleSidebar" position="right" [baseZIndex]="10000">
+  <h3>Choose a theme</h3>
+  <p-listbox
+    [options]="themes"
+    [(ngModel)]="selectedTheme"
+    optionLabel="name"
+    [style]="{ width: '15rem' }"
+    (onClick)="changeTheme()"
+  ></p-listbox>
+</p-sidebar>

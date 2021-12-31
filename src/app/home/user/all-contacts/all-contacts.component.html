@@ -1,4 +1,5 @@
 <p-orderList
+  class="{{ theme }}"
   [value]="contacts"
   [listStyle]="{ 'max-height': '35rem' }"
   header="List of Contacts"
@@ -10,10 +11,15 @@
     <div class="product-item">
       <div class="image-container">
         <img
+          *ngIf="contact.dp; else defaultImg"
           src="http://172.24.144.29:8080/{{ contact.dp }}"
           [alt]="contact.name"
           class="product-image"
         />
+        <ng-template #defaultImg>
+          <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png"
+        /></ng-template>
       </div>
       <div class="product-list-detail">
         <h5 class="p-mb-2">

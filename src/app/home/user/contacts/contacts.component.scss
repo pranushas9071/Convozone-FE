@@ -2,11 +2,6 @@
   border-bottom: 1px solid black;
   padding: 15px;
 }
-a {
-  text-decoration: none;
-  font-weight: bold;
-  color: black;
-}
 .product-item {
   display: flex;
   align-items: center;
@@ -55,24 +50,29 @@ a {
 :host ::ng-deep .p-orderlist .p-orderlist-header {
   display: none;
 }
-.newMessageContainer {
-  padding: 0px 5px 0px 5px;
-  background-color: lightseagreen;
-  color: white;
-  display: flex;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  font-weight: 600;
-  border-radius: 50%;
-}
-.highLightDate {
-  color: lightseagreen;
-  font-weight: 600;
-}
-.highLightMessage {
-  color: lightseagreen;
-}
 .messageStyle {
   font-weight: 600;
+}
+.container {
+  padding-top: 20%;
+  h5 {
+    font-family: cursive;
+  }
+  h6 {
+    font-family: cursive;
+    color: cornflowerblue;
+  }
+  p {
+    color: darkgray;
+    font-family: cursive;
+  }
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    color: white;
+  }
+  a:focus {
+    box-shadow: none;
+  }
 }

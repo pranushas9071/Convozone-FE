@@ -1,0 +1,218 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@mixin theme(
+  $fontColor: black,
+  $toolBarBgColor: darkcyan,
+  $bgColor: white,
+  $openedMsgFontColor,
+  $newNotification: lightSeaGreen,
+  $sentMsgBgColor: #a3efd5,
+  $headingFont: white,
+  $listHoverBgColor,
+  $ulBgColor,
+  $profileBg
+) {
+  body {
+    background-color: $bgColor;
+  }
+
+  .headings {
+    color: $headingFont;
+    margin-right: 20px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .p-toolbar {
+    background-color: $toolBarBgColor;
+    padding: 1.1rem;
+  }
+
+  .p-button:enabled:hover {
+    border: none;
+    background-color: $toolBarBgColor;
+  }
+
+  .p-button:enabled:focus {
+    border: none;
+    box-shadow: none;
+    background-color: $toolBarBgColor;
+  }
+
+  .p-button {
+    border: none;
+    background-color: $toolBarBgColor;
+  }
+
+  .p-orderlist .p-orderlist-filter-container {
+    background: $bgColor;
+  }
+
+  .p-orderlist .p-orderlist-list {
+    // background: $bgColor;
+    background: linear-gradient(-43deg, $ulBgColor, transparent);
+  }
+
+  .p-orderlist .p-orderlist-list .p-orderlist-item {
+    color: black;
+  }
+
+  .p-orderlist
+    .p-orderlist-list:not(.cdk-drop-list-dragging)
+    .p-orderlist-item:not(.p-highlight):hover {
+    background: $listHoverBgColor;
+  }
+
+  .newMessageContainer {
+    padding: 0px 5px 0px 5px;
+    background-color: $newNotification;
+    color: white;
+    display: flex;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    font-weight: 600;
+    border-radius: 50%;
+  }
+
+  .highLightDate {
+    color: $newNotification;
+    font-weight: 600;
+  }
+
+  .highLightMessage {
+    color: $newNotification;
+  }
+
+  .product-item .product-list-detail a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .product-item .product-list-detail a:hover {
+    color: $toolBarBgColor;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .header {
+    position: fixed;
+    height: 68px;
+    width: 100%;
+    display: flex;
+    background-color: $toolBarBgColor;
+    color: $headingFont;
+    border-bottom: 1px solid #ada8a8;
+  }
+
+  .right {
+    padding: 5px 10px 0px 10px;
+    width: 40%;
+    border-radius: 5px 0px 5px 5px;
+    background-color: $sentMsgBgColor;
+    color: $fontColor;
+    float: right;
+    margin-left: 58%;
+    margin-bottom: 10px;
+  }
+
+  .sentTime {
+    color: $fontColor;
+    margin: 0px;
+    font-size: 13px;
+    text-align: right;
+    padding: 0px 0px 5px;
+  }
+
+  .profile-outer-container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 29px;
+    background-size: cover;
+    background-image: url($profileBg);
+  }
+
+  .p-toolbar {
+    border-bottom: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    border-left: none;
+    border-right: none;
+  }
+
+  .p-inputtext:enabled:focus {
+    box-shadow: none;
+  }
+}
+
+.darkTheme {
+  @include theme(
+    white,
+    black,
+    #42414d,
+    bisque,
+    orange,
+    grey,
+    white,
+    #e9ecef,
+    #42414d,
+    "https://www.wallpapertip.com/wmimgs/80-801692_dark-wallpaper-of-nature-hd.jpg"
+  );
+}
+
+.primaryTheme {
+  @include theme(
+    black,
+    darkcyan,
+    white,
+    grey,
+    lightSeaGreen,
+    #a3efd5,
+    white,
+    #e9ecef,
+    white,
+    "https://images.pexels.com/photos/210307/pexels-photo-210307.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+  );
+}
+
+.lightTheme {
+  @include theme(
+    black,
+    #7300b3,
+    #f1d9ff,
+    grey,
+    rgb(221, 20, 221),
+    rgb(247, 134, 247),
+    white,
+    honeydew,
+    #f1d9ff,
+    "https://images.unsplash.com/photo-1614850523060-8da1d56ae167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3JmdWwlMjBsaWdodGluZ3xlbnwwfHwwfHw%3D&w=1000&q=80"
+  );
+}
+
+.scenericTheme {
+  @include theme(
+    black,
+    #005200,
+    #e8ffa2,
+    grey,
+    rgb(6, 155, 6),
+    lightgreen,
+    white,
+    #c9ef55,
+    #c8fb2d,
+    "https://i.pinimg.com/originals/63/bc/18/63bc18a6af4afe785911c9ae035c3e0f.jpg"
+  );
+}

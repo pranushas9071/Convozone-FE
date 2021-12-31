@@ -1,7 +1,12 @@
-<div class="outer-container">
+<div class="outer-container {{ theme }}">
   <div class="header">
     <i class="pi pi-arrow-left" (click)="goBack()"></i>
-    <img class="dp" src="{{ profile }}" />
+    <img *ngIf="dp; else defaultImg" class="dp" src="{{ profile }}" />
+    <ng-template #defaultImg>
+      <img
+        class="dp"
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png"
+    /></ng-template>
     <p class="liftName">
       {{ chatWith }}
     </p>
@@ -63,7 +68,7 @@
         </ng-template>
         <div class="right" *ngIf="data.username === username">
           <p class="chat">{{ data.message }}</p>
-          <p class="time" style="color: dimgray">
+          <p class="sentTime">
             {{ data.timeStamp | date: "shortTime" }}
             <svg
               *ngIf="data.state == 'sent'"
@@ -99,7 +104,7 @@
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
-              style="color: blue;"
+              style="color: blue"
               fill="currentColor"
               class="bi bi-check2-all"
               viewBox="0 0 16 16"
@@ -124,6 +129,18 @@
   </div>
   <div>
     <form [formGroup]="chats" (ngSubmit)="sendMessage()">
+      <div>
+        <p-button
+          icon="pi pi-link"
+          (onClick)="openDialog(fieldInput)"
+        ></p-button>
+        <input
+          #fieldInput
+          id="fileInput"
+          type="file"
+          style="display: none"
+        />
+      </div>
       <input
         type="text"
         id="messageInput"

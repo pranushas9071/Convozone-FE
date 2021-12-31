@@ -19,11 +19,12 @@ import { CommonService } from 'src/app/services/common.service';
 import { environment } from 'src/environments/environment';
 import { ChatService } from '../../services/chat.service';
 import { SocketService } from '../../services/socket.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-chat-box',
   templateUrl: './chat-box.component.html',
-  styleUrls: ['./chat-box.component.css'],
+  styleUrls: ['./chat-box.component.scss'],
   animations: [
     trigger('PulseAtEnds', [
       transition('* => *', [
@@ -66,13 +67,17 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
   userAvailable: boolean = false;
   lastActive!: string;
   today = new Date().toISOString();
+  dp: any;
+  file?: File;
+  theme = 'primaryTheme';
 
   constructor(
     private fb: FormBuilder,
     private chatService: ChatService,
     private commonService: CommonService,
     private router: ActivatedRoute,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private themeService: ThemeService
   ) {}
 
   chats = this.fb.group({
@@ -82,8 +87,13 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.router.queryParams.subscribe((params) => {
       this.chatWith = params['username'];
+      this.dp = params['profile'];
       this.profile = `${environment.dpUrl}/${params['profile']}`;
       this.lastActive = params['lastActive'];
+    });
+
+    this.themeService.selectedTheme.subscribe((theme) => {
+      this.theme = theme;
     });
 
     this.chats.get('message')?.valueChanges.subscribe((msg) => {
@@ -128,7 +138,6 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
         this.chatService
           .updateMessageStateAsSeen('seen', this.chatWith)
           .subscribe((res) => {
-
             //Emits 'change in message state' event to display recent changes in message state to sender..
             this.socket.emit('message seen', {
               info: 'Message has been viewed',
@@ -207,5 +216,9 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
   goBack() {
     this.chatWith = '';
     window.history.back();
+  }
+
+  openDialog(input: any) {
+    input.click();
   }
 }
