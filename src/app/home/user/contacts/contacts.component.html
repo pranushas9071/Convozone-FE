@@ -1,4 +1,7 @@
-<div class="{{theme}} container text-center" *ngIf="contacts.length==0; else showChats">
+<div
+  class="{{ theme }} container text-center"
+  *ngIf="contacts.length == 0; else showChats"
+>
   <img
     width="150px"
     height="150px"
@@ -54,10 +57,23 @@
             >
           </h5>
           <span
-            *ngIf="contact.result.length != 0"
+            *ngIf="contact.lastMessageDetails[0].img"
+            class="product-category messageStyle"
+            [ngClass]="{ highLightMessage: contact.newMessages }"
+            ><i
+              class="pi pi-image"
+              style="padding-right: 10px; padding-bottom: 4px"
+            ></i
+          ></span>
+          <span
+            *ngIf="contact.lastMessageDetails[0].msg; else elseblk"
             class="product-category messageStyle"
             [ngClass]="{ highLightMessage: contact.newMessages }"
             >{{ contact.lastMessageDetails[0].msg }}</span
+          >
+          <ng-template
+            #elseblk
+            >Photo</ng-template
           >
         </div>
         <div class="product-list-action">

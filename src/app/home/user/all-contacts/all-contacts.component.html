@@ -12,7 +12,7 @@
       <div class="image-container">
         <img
           *ngIf="contact.dp; else defaultImg"
-          src="http://172.24.144.29:8080/{{ contact.dp }}"
+          src="{{dpBaseUrl}}/{{ contact.dp }}"
           [alt]="contact.name"
           class="product-image"
         />

@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   maxDate: Date = new Date();
   theme = 'primaryTheme';
   disabled: boolean = true;
+  file?: File;
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +34,6 @@ export class ProfileComponent implements OnInit {
     private messageService: MessageService,
     private themeService: ThemeService
   ) {}
-  file?: File;
 
   ngOnInit(): void {
     this.userService.getUserDetails().subscribe((data: any) => {

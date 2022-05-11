@@ -69,6 +69,7 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
   today = new Date().toISOString();
   dp: any;
   file?: File;
+  imgUrl: string = '';
   theme = 'primaryTheme';
 
   constructor(
@@ -88,6 +89,7 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
     this.router.queryParams.subscribe((params) => {
       this.chatWith = params['username'];
       this.dp = params['profile'];
+      this.imgUrl = `${environment.dpUrl}`;
       this.profile = `${environment.dpUrl}/${params['profile']}`;
       this.lastActive = params['lastActive'];
     });
@@ -175,15 +177,24 @@ export class ChatBoxComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  sendImgMsg(event: any) {
+    console.log('file chosen..');
+    this.file = event.target.files[0];
+  }
+
   sendMessage() {
-    if (this.chats.value.message) {
-      const data = {
-        message: this.chats.value.message,
-        username: this.username,
-        timeStamp: new Date(),
-        to: this.chatWith,
-      };
-      this.chatService.saveMessage(data).subscribe((res) => {
+    const formData = new FormData();
+    if (this.file) formData.append('file', this.file);
+    if (this.chats.value.message || this.file) {
+      // const data = {
+      //   message: this.chats.value.message,
+      //   username: this.username,
+      //   timeStamp: new Date(),
+      //   to: this.chatWith,
+      // };
+      formData.append('message', this.chats.value.message),
+        formData.append('to', this.chatWith);
+      this.chatService.saveMessage(formData).subscribe((res) => {
         this.socket.emit('chat message', {
           info: 'a message alert',
           to: this.chatWith,

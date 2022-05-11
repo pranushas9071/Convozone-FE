@@ -67,6 +67,12 @@
           <div class="date">{{ messages[i].timeStamp | date: "longDate" }}</div>
         </ng-template>
         <div class="right" *ngIf="data.username === username">
+          <img
+            *ngIf="data.image"
+            src="{{ imgUrl }}/imgMessage/{{ data.image }}"
+            height="150px"
+            width="150px"
+          />
           <p class="chat">{{ data.message }}</p>
           <p class="sentTime">
             {{ data.timeStamp | date: "shortTime" }}
@@ -118,7 +124,14 @@
             </svg>
           </p>
         </div>
-        <div *ngIf="data.username != username" class="left">
+        <div class="left" *ngIf="data.username != username">
+          <a href="{{ imgUrl }}/imgMessage/{{ data.image }}" download>
+            <img
+              *ngIf="data.image"
+              src="{{ imgUrl }}/imgMessage/{{ data.image }}"
+              height="150px"
+              width="150px"
+          /></a>
           <p class="chat">{{ data.message }}</p>
           <p class="time">
             {{ data.timeStamp | date: "shortTime" }}
@@ -139,6 +152,7 @@
           id="fileInput"
           type="file"
           style="display: none"
+          (change)="sendImgMsg($event)"
         />
       </div>
       <input

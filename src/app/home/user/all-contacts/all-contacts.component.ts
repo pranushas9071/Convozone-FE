@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { ChatService } from '../../services/chat.service';
 import { ThemeService } from '../../services/theme.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-all-contacts',
@@ -17,6 +18,7 @@ export class AllContactsComponent implements OnInit {
   
   username: any;
   contacts: any;
+  dpBaseUrl: string = environment.dpUrl;
   theme = 'primaryTheme';
 
   ngOnInit(): void {
